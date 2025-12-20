@@ -1,2 +1,2 @@
 Flask==2.3.3
-twilio==8.15.0
+twilio==8.13.2
