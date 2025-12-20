@@ -1,29 +1,40 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
+import asyncio
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import CommandStart
 
-TOKEN = "توكنك_هنا"
+TOKEN = "توكن_بوتك_هنا"
 PASSWORD = "7474"
 
-authorized = set()
+authorized_users = set()
 
-async def handle(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_user.id
-    text = update.message.text.strip()
+bot = Bot(token=TOKEN)
+dp = Dispatcher()
 
-    if user_id not in authorized:
+
+@dp.message(CommandStart())
+async def start(message: types.Message):
+    await message.answer("🔐 أهلاً بك\nأدخل كلمة السر للمتابعة")
+
+
+@dp.message()
+async def handle_message(message: types.Message):
+    user_id = message.from_user.id
+    text = message.text.strip()
+
+    if user_id not in authorized_users:
         if text == PASSWORD:
-            authorized.add(user_id)
-            await update.message.reply_text("✅ تم الدخول\nاكتب اسم المؤسسة")
+            authorized_users.add(user_id)
+            await message.answer("✅ تم الدخول\nاكتب اسم المؤسسة")
         else:
-            await update.message.reply_text("🔒 أدخل كلمة السر")
+            await message.answer("❌ كلمة السر غير صحيحة")
         return
 
-    await update.message.reply_text(f"📂 تم الاستلام: {text}")
+    await message.answer(f"📂 تم استلام: {text}")
 
-def main():
-    app = ApplicationBuilder().token(TOKEN).build()
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle))
-    app.run_polling()
+
+async def main():
+    await dp.start_polling(bot)
+
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
