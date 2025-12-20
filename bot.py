@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
 
-TOKEN = "ضع_توكن_البوت_هنا"
+TOKEN = "8388460961:AAEPh06c0C_pbtf-XeA81QLJKhR2FyO-HIU"
 PASSWORD = "7474"
 
 authorized = set()
