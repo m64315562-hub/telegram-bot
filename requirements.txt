@@ -1,5 +1,3 @@
 Flask==2.3.3
 twilio
-pillow==10.1.0
-pytesseract==0.3.10
 requests==2.31.0
