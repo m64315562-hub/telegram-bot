@@ -1,3 +1,1 @@
-Flask==2.3.3
-twilio
-requests==2.31.0
+python-telegram-bot==20.7
